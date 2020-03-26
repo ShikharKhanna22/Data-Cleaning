@@ -1,0 +1,122 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Helvetica; fontsize=18; labelloc=t
+label=Data_Cleaning_Workflow
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing atomic programs in workflow */
+openRefine_Dish [shape=record rankdir=LR label="{<f0> openRefine_Dish |<f1> Use OpenRefine to clean Dish file}"];
+openRefine_Menu [shape=record rankdir=LR label="{<f0> openRefine_Menu |<f1> Use OpenRefine to clean Menu file}"];
+openRefine_MenuItem [shape=record rankdir=LR label="{<f0> openRefine_MenuItem |<f1> Use OpenRefine to clean MenuItem file}"];
+openRefine_MenuPage [shape=record rankdir=LR label="{<f0> openRefine_MenuPage |<f1> Use OpenRefine to clean MenuPage file}"];
+LoadingDataIntoDb [shape=record rankdir=LR label="{<f0> LoadingDataIntoDb |<f1> Use SQLLite commandline utility to load all the files into db.}"];
+sqlLite_Dish [shape=record rankdir=LR label="{<f0> sqlLite_Dish |<f1> Use SQLLite to perform data profiling.}"];
+sqlLite_Menu [shape=record rankdir=LR label="{<f0> sqlLite_Menu |<f1> Use SQLLite to perform data profiling.}"];
+sqlLite_MenuItem [shape=record rankdir=LR label="{<f0> sqlLite_MenuItem |<f1> Use SQLLite to perform data profiling.}"];
+sqlLite_MenuPage [shape=record rankdir=LR label="{<f0> sqlLite_MenuPage |<f1> Use SQLLite to perform data profiling.}"];
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+Dish_Final [shape=record rankdir=LR label="{<f0> Dish_Final |<f1> sqlite\:menu_project.db\:Dish_Final}"];
+Menu_Final [shape=record rankdir=LR label="{<f0> Menu_Final |<f1> sqlite\:menu_project.db\:Menu_Final}"];
+MenuItem_Final [shape=record rankdir=LR label="{<f0> MenuItem_Final |<f1> sqlite\:menu_project.db\:MenuItem_Final}"];
+MenuPage_Final [shape=record rankdir=LR label="{<f0> MenuPage_Final |<f1> sqlite\:menu_project.db\:MenuPage_Final}"];
+"Dish.csv" [shape=record rankdir=LR label="{<f0> Dish.csv |<f1> file\://\{dir\}/Dish.csv}"];
+"Menu.csv" [shape=record rankdir=LR label="{<f0> Menu.csv |<f1> file\://\{dir\}/Menu.csv}"];
+"MenuItem.csv" [shape=record rankdir=LR label="{<f0> MenuItem.csv |<f1> file\://\{dir\}\}/MenuItem.csv}"];
+"MenuPage.csv" [shape=record rankdir=LR label="{<f0> MenuPage.csv |<f1> file\://\{dir\}/MenuPage.csv}"];
+"Dish_clean.csv" [shape=record rankdir=LR label="{<f0> Dish_clean.csv |<f1> file\://\{dir\}//Dish_clean.csv}"];
+"Menu_clean.csv" [shape=record rankdir=LR label="{<f0> Menu_clean.csv |<f1> file\://\{dir\}//Menu_clean.csv}"];
+"MenuItem_clean.csv" [shape=record rankdir=LR label="{<f0> MenuItem_clean.csv |<f1> file\://\{dir\}//MenuItem_clean.csv}"];
+"MenuPage_clean.csv" [shape=record rankdir=LR label="{<f0> MenuPage_clean.csv |<f1> file\://\{dir\}//MenuPage_clean.csv}"];
+Dish_c
+Menu_c
+MenuItem_c
+MenuPage_c
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+openRefine_Dish -> "Dish_clean.csv"
+"Dish.csv" -> openRefine_Dish
+Cleanup_steps_dish -> openRefine_Dish
+openRefine_Menu -> "Menu_clean.csv"
+"Menu.csv" -> openRefine_Menu
+Cleanup_steps_menu -> openRefine_Menu
+openRefine_MenuItem -> "MenuItem_clean.csv"
+"MenuItem.csv" -> openRefine_MenuItem
+Cleanup_steps_menuItem -> openRefine_MenuItem
+openRefine_MenuPage -> "MenuPage_clean.csv"
+"MenuPage.csv" -> openRefine_MenuPage
+Cleanup_steps_menuPage -> openRefine_MenuPage
+LoadingDataIntoDb -> Dish_c
+LoadingDataIntoDb -> Menu_c
+LoadingDataIntoDb -> MenuItem_c
+LoadingDataIntoDb -> MenuPage_c
+"Dish_clean.csv" -> LoadingDataIntoDb
+"Menu_clean.csv" -> LoadingDataIntoDb
+"MenuItem_clean.csv" -> LoadingDataIntoDb
+"MenuPage_clean.csv" -> LoadingDataIntoDb
+sqlLite_Dish -> Dish_Final
+Dish_c -> sqlLite_Dish
+applySqlProfilingOperations_Dish -> sqlLite_Dish
+sqlLite_Menu -> Menu_Final
+Menu_c -> sqlLite_Menu
+applySqlProfilingOperations_Menu -> sqlLite_Menu
+sqlLite_MenuItem -> MenuItem_Final
+MenuItem_c -> sqlLite_MenuItem
+applySqlProfilingOperations_MenuItem -> sqlLite_MenuItem
+sqlLite_MenuPage -> MenuPage_Final
+MenuPage_c -> sqlLite_MenuPage
+applySqlProfilingOperations_MenuPage -> sqlLite_MenuPage
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+"Dish.csv_input_port" [label=""]
+"Menu.csv_input_port" [label=""]
+"MenuPage.csv_input_port" [label=""]
+"MenuItem.csv_input_port" [label=""]
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+Dish_Final_output_port [label=""]
+Menu_Final_output_port [label=""]
+MenuItem_Final_output_port [label=""]
+MenuPage_Final_output_port [label=""]
+
+/* Edges from input ports to channels */
+"Dish.csv_input_port" -> "Dish.csv"
+"Menu.csv_input_port" -> "Menu.csv"
+"MenuPage.csv_input_port" -> "MenuPage.csv"
+"MenuItem.csv_input_port" -> "MenuItem.csv"
+
+/* Edges from channels to output ports */
+Dish_Final -> Dish_Final_output_port
+Menu_Final -> Menu_Final_output_port
+MenuItem_Final -> MenuItem_Final_output_port
+MenuPage_Final -> MenuPage_Final_output_port
+
+/* End of top-level graph */
+}

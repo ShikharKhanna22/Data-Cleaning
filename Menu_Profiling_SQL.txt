@@ -1,0 +1,223 @@
+ 
+SELECT 
+SUM(CASE WHEN ID IS NULL THEN 1 ELSE 0 END) ID_NULL,
+SUM(CASE WHEN NAME IS NULL THEN 1 ELSE 0 END) NAME_NULL,
+SUM(CASE WHEN SPONSOR IS NULL THEN 1 ELSE 0 END) SPONSOR_NULL,
+SUM(CASE WHEN NOTES IS NULL THEN 1 ELSE 0 END) NOTES_NULL,
+SUM(CASE WHEN CALL_NUMBER IS NULL THEN 1 ELSE 0 END) CALL_NUM_NULL,
+SUM(CASE WHEN DATE IS NULL THEN 1 ELSE 0 END) DATE_NULL,
+SUM(CASE WHEN LOCATION IS NULL THEN 1 ELSE 0 END) LOC_NULL,
+SUM(CASE WHEN CURRENCY IS NULL THEN 1 ELSE 0 END) CUR_NULL,
+SUM(CASE WHEN currency_symbol IS NULL THEN 1 ELSE 0 END) cur_sym_NULL,
+SUM(CASE WHEN status IS NULL THEN 1 ELSE 0 END) status_NULL,
+SUM(CASE WHEN page_count IS NULL THEN 1 ELSE 0 END) page_NULL,
+SUM(CASE WHEN dish_count IS NULL THEN 1 ELSE 0 END) dish_NULL
+  FROM Menu_C;
+
+
+select count(*) from Menu_c -- 2308
+
+select 
+count(distinct(id)) as id_ct,
+count(distinct(name)) as name_ct,
+count(distinct(sponsor)) as sponsor_ct,
+count(distinct(notes)) as notes_ct,
+count(distinct(call_number)) as call_num_ct,
+count(distinct(date)) as date_ct,
+count(distinct(location)) as loc_ct,
+count(distinct(currency)) as curr_ct,
+count(distinct(currency_symbol)) as cur_sym_ct,
+count(distinct(status)) as status_ct,
+count(distinct(page_count)) as page_count_ct,
+count(distinct(dish_count)) as dish_count_ct
+from Menu_c
+
+
+
+select * from Menu_c where notes is null;
+
+select CASE WHEN NOTES IS NULL THEN 1 ELSE 0 END NOTES_NULL_COUNT
+from Menu_c
+
+drop table Menu_c
+create table Menu_c as select * from Menu;
+
+
+update Menu_c 
+set notes = null where notes = '';
+
+update Menu_c 
+set date = null where date = '';
+
+update Menu_c 
+set name = null where name = 'null';
+
+update Menu_c 
+set currency = null where currency = '';
+
+update Menu_c 
+set currency_symbol = null where currency_symbol = '';
+
+update Menu_c 
+set currency = null where currency = '';
+
+select * from Menu_c
+where dish_count = '';
+
+-----------------------------------------------------
+--Menu ITEM
+
+create table MenuItem_c as select * from MenuItem;
+
+update MenuItem_c 
+set price = null where price = '';
+update MenuItem_c 
+set high_price = null where high_price = '';
+update MenuItem_c 
+set id = null where id = '';
+update MenuItem_c 
+set menu_page_id = null where menu_page_id = '';
+update MenuItem_c 
+set dish_id = null where dish_id = '';
+update MenuItem_c 
+set created_at = null where created_at = '';
+
+update MenuItem_c 
+set updated_at = null where updated_at = '';
+update MenuItem_c 
+set xpos = null where xpos = '';
+update MenuItem_c 
+set ypos = null where ypos = '';
+
+select count(*) from MenuItem_c --1333523
+
+SELECT 
+SUM(CASE WHEN ID IS NULL THEN 1 ELSE 0 END) ID_NULL,
+SUM(CASE WHEN menu_page_id IS NULL THEN 1 ELSE 0 END) menu_page_id_NULL,
+SUM(CASE WHEN price IS NULL THEN 1 ELSE 0 END) price_NULL,
+SUM(CASE WHEN high_price IS NULL THEN 1 ELSE 0 END) high_price_NULL,
+SUM(CASE WHEN dish_id IS NULL THEN 1 ELSE 0 END) dish_id_NULL,
+SUM(CASE WHEN created_at IS NULL THEN 1 ELSE 0 END) created_at_NULL,
+SUM(CASE WHEN updated_at IS NULL THEN 1 ELSE 0 END) updated_at_NULL,
+SUM(CASE WHEN xpos IS NULL THEN 1 ELSE 0 END) xpos_NULL,
+SUM(CASE WHEN ypos IS NULL THEN 1 ELSE 0 END) ypos_NULL
+  FROM MenuItem_c;
+
+select 
+count(distinct(id)) as id_ct,
+count(distinct(menu_page_id)) as menu_page_id_ct,
+count(distinct(price)) as price_ct,
+count(distinct(high_price)) as high_price_ct,
+count(distinct(dish_id)) as dish_id_ct,
+count(distinct(created_at)) as created_at_ct,
+count(distinct(updated_at)) as updated_at_ct,
+count(distinct(xpos)) as xpos_ct,
+count(distinct(ypos)) as ypos_ct
+from MenuItem_c
+
+SELECT count( * ) 
+  FROM MenuItem_c
+ WHERE menu_page_id NOT IN (SELECT id FROM MenuPage_c);
+
+
+SELECT count(*)
+  FROM MenuItem_c
+ WHERE dish_id NOT IN (SELECT id FROM Dish_c);
+-----------------------
+-- Menu  Page
+
+create table MenuPage_c as select * from MenuPage;
+
+update MenuPage_c 
+set id = null where id = '';
+update MenuPage_c 
+set menu_id = null where menu_id = '';
+update MenuPage_c 
+set page_number = null where page_number = '';
+update MenuPage_c 
+set image_id = null where image_id = '';
+update MenuPage_c 
+set full_height = null where full_height = '';
+update MenuPage_c 
+set full_width = null where full_width = '';
+update MenuPage_c 
+set uuid = null where uuid = '';
+
+select count(*) from MenuPage_c
+
+SELECT 
+SUM(CASE WHEN ID IS NULL THEN 1 ELSE 0 END) ID_NULL,
+SUM(CASE WHEN menu_id IS NULL THEN 1 ELSE 0 END) menu_id_NULL,
+SUM(CASE WHEN page_number IS NULL THEN 1 ELSE 0 END) page_number_NULL,
+SUM(CASE WHEN image_id IS NULL THEN 1 ELSE 0 END) image_id_NULL,
+SUM(CASE WHEN full_height IS NULL THEN 1 ELSE 0 END) full_height_NULL,
+SUM(CASE WHEN full_width IS NULL THEN 1 ELSE 0 END) full_width_NULL,
+SUM(CASE WHEN uuid IS NULL THEN 1 ELSE 0 END) uuid_NULL
+  FROM MenuPage_c;
+
+select 
+count(distinct(id)) as id_ct,
+count(distinct(menu_id)) as menu_id_ct,
+count(distinct(page_number)) as page_number_ct,
+count(distinct(image_id)) as image_id_ct,
+count(distinct(full_height)) as full_height_ct,
+count(distinct(full_width)) as full_width_ct,
+count(distinct(uuid)) as uuid_ct
+from MenuPage_c
+
+SELECT count( * ) 
+  FROM MenuPage_c
+ WHERE menu_id NOT IN (SELECT id FROM Menu_c);
+
+
+---------------------------------------------------
+
+-- DISH
+
+create table Dish_c as select * from Dish;
+
+update Dish_c 
+set id = null where id = '';
+update Dish_c 
+set name = null where name = '';
+update Dish_c 
+set menus_appeared = null where menus_appeared = '';
+update Dish_c 
+set times_appeared = null where times_appeared = '';
+update Dish_c 
+set first_appeared = null where first_appeared = '';
+update Dish_c 
+set last_appeared = null where last_appeared = '';
+update Dish_c 
+set lowest_price = null where lowest_price = '';
+update Dish_c 
+set highest_price = null where highest_price = '';
+
+
+select count(*) from Dish_c -- 425244
+
+SELECT 
+SUM(CASE WHEN ID IS NULL THEN 1 ELSE 0 END) ID_NULL,
+SUM(CASE WHEN name IS NULL THEN 1 ELSE 0 END) name_NULL,
+SUM(CASE WHEN menus_appeared IS NULL THEN 1 ELSE 0 END) menus_appeared_NULL,
+SUM(CASE WHEN times_appeared IS NULL THEN 1 ELSE 0 END) times_appeared_NULL,
+SUM(CASE WHEN first_appeared IS NULL THEN 1 ELSE 0 END) first_appeared_NULL,
+SUM(CASE WHEN last_appeared IS NULL THEN 1 ELSE 0 END) last_appeared_NULL,
+SUM(CASE WHEN lowest_price IS NULL THEN 1 ELSE 0 END) lowest_price_NULL,
+SUM(CASE WHEN highest_price IS NULL THEN 1 ELSE 0 END) highest_price_NULL
+  FROM Dish_c;
+
+select 
+count(distinct(id)) as id_ct,
+count(distinct(name)) as name_ct,
+count(distinct(menus_appeared)) as menus_appeared_ct,
+count(distinct(times_appeared)) as times_appeared_ct,
+count(distinct(first_appeared)) as first_appeared_ct,
+count(distinct(last_appeared)) as last_appeared_ct,
+count(distinct(lowest_price)) as lowest_price_ct,
+count(distinct(highest_price)) as highest_price_ct
+from Dish_c
+
+SELECT count( * ) 
+  FROM MenuPage_c
+ WHERE menu_id NOT IN (SELECT id FROM Menu_c);

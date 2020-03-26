@@ -1,0 +1,70 @@
+# @BEGIN Data_Cleaning_Workflow  @desc Building an end to end data cleaning pipeline.
+# @in Dish.csv  @uri file://{dir}/Dish.csv
+# @in Menu.csv  @uri file://{dir}/Menu.csv
+# @in MenuPage.csv  @uri file://{dir}/MenuPage.csv
+# @in MenuItem.csv  @uri file://{dir}}/MenuItem.csv
+# @out Dish_Final
+# @out Menu_Final
+# @out MenuItem_Final
+# @out MenuPage_Final
+
+#     @Begin openRefine_Dish  @desc Use OpenRefine to clean Dish file
+#     @in Dish.csv  @uri file://{dir}/Dish.csv
+#     @param Cleanup_steps_dish
+#     @out Dish_clean.csv  @uri file://{dir}//Dish_clean.csv
+#     @End openRefineDish
+
+#     @Begin openRefine_Menu  @desc Use OpenRefine to clean Menu file
+#     @in Menu.csv  @uri file://{dir}/Menu.csv
+#     @param Cleanup_steps_menu
+#     @out Menu_clean.csv  @uri file://{dir}//Menu_clean.csv
+#     @End openRefineMenu
+
+#     @Begin openRefine_MenuItem  @desc Use OpenRefine to clean MenuItem file
+#     @in MenuItem.csv  @uri file://{dir}/MenuItem.csv
+#     @param Cleanup_steps_menuItem
+#     @out MenuItem_clean.csv  @uri file://{dir}//MenuItem_clean.csv
+#     @End openRefine_MenuItem
+
+#     @Begin openRefine_MenuPage  @desc Use OpenRefine to clean MenuPage file
+#     @in MenuPage.csv  @uri file://{dir}/MenuPage.csv
+#     @param Cleanup_steps_menuPage
+#     @out MenuPage_clean.csv  @uri file://{dir}//MenuPage_clean.csv
+#     @End openRefine_MenuPage
+
+#     @Begin LoadingDataIntoDb  @desc Use SQLLite commandline utility to load all the files into db.
+#     @in Dish_clean.csv
+#     @in Menu_clean.csv
+#     @in MenuItem_clean.csv
+#     @in MenuPage_clean.csv
+#     @out Dish_c
+#     @out Menu_c
+#     @out MenuItem_c
+#     @out MenuPage_c
+#     @End  LoadingDataIntoDb
+
+#     @Begin sqlLite_Dish  @desc Use SQLLite to perform data profiling.
+#     @in Dish_c  @uri sqlite:menu_project.db:Dish_c
+#     @param applySqlProfilingOperations_Dish
+#     @out Dish_Final  @uri sqlite:menu_project.db:Dish_Final
+#     @End sqlLite_Dish
+
+#     @Begin sqlLite_Menu  @desc Use SQLLite to perform data profiling.
+#     @in Menu_c  @uri sqlite:menu_project.db:Menu_c
+#     @param applySqlProfilingOperations_Menu
+#     @out Menu_Final  @uri sqlite:menu_project.db:Menu_Final
+#     @End sqlLite_Menu
+
+#     @Begin sqlLite_MenuItem  @desc Use SQLLite to perform data profiling.
+#     @in MenuItem_c  @uri sqlite:menu_project.db:MenuItem_c
+#     @param applySqlProfilingOperations_MenuItem
+#     @out MenuItem_Final  @uri sqlite:menu_project.db:MenuItem_Final
+#     @End sqlLite_MenuItem
+
+#     @Begin sqlLite_MenuPage  @desc Use SQLLite to perform data profiling.
+#     @in MenuPage_c  @uri sqlite:menu_project.db:MenuPage_c
+#     @param applySqlProfilingOperations_MenuPage
+#     @out MenuPage_Final  @uri sqlite:menu_project.db:MenuPage_Final
+#     @End sqlLite_MenuPage
+
+# @End Data Cleaning Workflow
